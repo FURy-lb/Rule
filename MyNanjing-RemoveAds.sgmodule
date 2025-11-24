@@ -1,6 +1,6 @@
 #!name=MyNanjing - Remove Splash Ads
 #!desc=我的南京去开屏广告
-#!author=Custom
+#!author=FURy-lb
 #!version=1.0
 #!category=AdBlock
 
@@ -10,4 +10,5 @@ https?:\/\/m\.mynj\.cn:\d+\/znmh_FEP\/loadpic\.jsp.*ad_pic.* - reject
 
 [MITM]
 hostname = m.mynj.cn
+
 
