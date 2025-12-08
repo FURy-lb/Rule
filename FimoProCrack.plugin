@@ -1,0 +1,12 @@
+#!name = Fimo Pro Unlock
+#!desc = 解锁 Fimo Pro 高级功能（Loon 版本，使用自有仓库）
+#!author = FURy-lb
+#!update-url = https://raw.githubusercontent.com/FURy-lb/Rule/main/FimoProCrack.sgmodule
+
+[Script]
+# 解锁 FIMO 会员
+http-response ^https?:\/\/server\.fimoapp\.com\/v2\/account\/verify requires-body=1, script-path=https://raw.githubusercontent.com/FURy-lb/Rule/main/FimoProCrack.js
+
+[MITM]
+hostname = server.fimoapp.com
+
