@@ -10,3 +10,4 @@ http-response ^https?:\/\/server\.fimoapp\.com\/v2\/account\/verify requires-bod
 [MITM]
 hostname = server.fimoapp.com
 
+
