@@ -1,0 +1,56 @@
+#!name=酷狗音乐会员解锁（Surge 专用可听歌版）
+#!desc=Surge 专用：显示会员 + 官方直链播放，稳定可听歌，不使用第三方 v5url
+#!category=KuGouMusic
+#!author=Surge-Only
+#!version=Surge-1.0.0
+
+[Rule]
+# ===== 广告 / 弹窗 =====
+URL-REGEX, ^https:\/\/vipssr\.kugou\.com\/static\/js\/async\/flexPayPopup, REJECT
+URL-REGEX, ^https:\/\/.*\.kugou\.com\/vipssr\/prepay_ios\.html, REJECT
+URL-REGEX, ^https:\/\/staticssl\.kugou\.com\/common\/js-lib\/vip\/dlg_ctrler_v2\.js$, REJECT
+URL-REGEX, ^https:\/\/vipssr\.kugou\.com\/static\/js\/vip\/newUi\/vipPageUnionIosContent-, REJECT
+
+# ===== 广告域名 =====
+DOMAIN, ads.service.kugou.com, REJECT
+DOMAIN, adsfile.kugou.com, REJECT
+DOMAIN, adserviceretry.kugou.com, REJECT
+DOMAIN, webvoobssdl.kugou.com, REJECT
+
+# ⚠️ 注意：Surge 必须放行日志接口，不能 REJECT
+# log.web.kugou.com / tracker 相关不要拦
+
+[Script]
+# ===== 登录 / 会员状态 =====
+酷狗登录Token = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/v5\/login_by_token, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+酷狗快速登录 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/v1\/login_by_quick_token, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+酷狗登录扩展信息 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/v2\/get_login_extend_info, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+# ===== VIP 信息 =====
+酷狗VIP信息V2 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/mobile\/vipinfoV2, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+酷狗VIP配置 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/v2\/get_vip_config, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+酷狗VIP等级详情 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/promotionvip\/v3\/vip_level\/detail, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+酷狗融合用户信息 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/vip\/v1\/fusion\/userinfo, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+# ===== 资源权限（关键）=====
+# 只改权限，不碰播放 URL
+酷狗资源权限精简版 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/v1\/get_res_privilege\/lite, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+酷狗联合音频信息 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/v1\/union\/audio_info, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+# ===== 首页 / 卡片去广告 =====
+酷狗首页卡片 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/ads\.gateway\/v2\/home_card, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+酷狗侧边栏 = type=http-response, pattern=^https:\/\/.*\.kugou\.com\/ads\.gateway\/v2\/sidebar_, requires-body=true, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/kugou.js
+
+# ❌ 特别说明：
+# Surge 专用版本【刻意不包含】 gateway.kugou.com/tracker/v5/url
+# 这是为了保证“可听歌 + 稳定”
+
+[MITM]
+hostname = %APPEND% *.kugou.com, gateway.kugou.com, vipos.kugou.com
