@@ -1,14 +1,12 @@
-#!name=MyNanjing - Remove Splash Ads
-#!desc=我的南京去开屏广告
-#!author=FURy-lb
-#!version=1.0
-#!category=AdBlock
+#!name=我的南京 - 去开屏广告（QX规则移植）
+#!desc=适配 Surge 及非标准端口
+#!version=1.2
 
-[Rewrite]
-# My Nanjing - Remove startup/splash ads
-https?:\/\/m\.mynj\.cn:\d+\/znmh_FEP\/loadpic\.jsp.*ad_pic.* - reject
+[General]
+force-http-engine-hosts = %APPEND% m.mynj.cn:0
+
+[URL Rewrite]
+^https?://m\.mynj\.cn(?::[0-9]+)?/znmh_FEP/loadpic\.jsp.*ad_pic.*open _ reject
 
 [MITM]
-hostname = m.mynj.cn
-
-
+hostname = %APPEND% m.mynj.cn:0
